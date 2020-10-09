@@ -11,7 +11,7 @@ public class UserEntity implements Serializable {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue( strategy = GenerationType.AUTO)
+    @GeneratedValue( strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(name = "uuid")
@@ -24,7 +24,7 @@ public class UserEntity implements Serializable {
     @Size(max = 30)
     private String firstName;
 
-    @Column(name = "lastName")
+    @Column(name = "lastname")
     @NotNull
     @Size(max = 30)
     private String lastName;
