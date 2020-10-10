@@ -40,7 +40,6 @@ public class UserController {
         userEntity.setDob(signupUserRequest.getDob());
         userEntity.setPassword(signupUserRequest.getPassword());
         userEntity.setRole("nonadmin");
-        userEntity.setSalt("123");
 
         final UserEntity createdUserEntity = userBusinessService.signUp(userEntity);
 

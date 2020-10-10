@@ -16,6 +16,9 @@ public class UserBusinessService {
     @Autowired
     private UserDao userDao;
 
+    @Autowired
+    private PasswordCryptographyProvider cryptographyProvider;
+
 
     /*
         checks if a user exists in db with username passed
@@ -41,6 +44,9 @@ public class UserBusinessService {
 
     @Transactional
     public UserEntity signUp( UserEntity userEntity) {
+        String[] encryptedText = cryptographyProvider.encrypt(userEntity.getPassword());
+        userEntity.setSalt(encryptedText[0]);
+        userEntity.setPassword(encryptedText[1]);
         return userDao.createUser(userEntity);
     }
 }
