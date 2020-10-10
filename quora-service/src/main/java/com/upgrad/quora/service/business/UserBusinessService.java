@@ -1,0 +1,46 @@
+package com.upgrad.quora.service.business;
+
+import com.upgrad.quora.service.dao.UserDao;
+import com.upgrad.quora.service.entity.UserEntity;
+import com.upgrad.quora.service.exception.SignUpRestrictedException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+/**
+ *
+ */
+@Service
+public class UserBusinessService {
+
+    @Autowired
+    private UserDao userDao;
+
+
+    /*
+        checks if a user exists in db with username passed
+     */
+    public boolean checkUserNameExists(String username)throws  SignUpRestrictedException{
+        UserEntity userEntity = userDao.getUserByUserName(username);
+        if(userEntity != null){
+            throw new SignUpRestrictedException("SGR-001","Try any other Username, this Username has already been taken");
+        }
+        return false;
+    }
+
+    /*
+        checks if a user exists in db with email passed
+     */
+    public boolean checkEmailExists(String email)throws  SignUpRestrictedException{
+        UserEntity userEntity = userDao.getUserByEmail(email);
+        if(userEntity != null){
+            throw  new SignUpRestrictedException("SGR-002","This user has already been registered, try with any other emailId");
+        }
+        return false;
+    }
+
+    @Transactional
+    public UserEntity signUp( UserEntity userEntity) {
+        return userDao.createUser(userEntity);
+    }
+}
