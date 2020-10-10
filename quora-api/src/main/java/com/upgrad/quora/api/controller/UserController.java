@@ -53,7 +53,7 @@ public class UserController {
 
         final UserEntity createdUserEntity = userBusinessService.signUp(userEntity);
 
-        SignupUserResponse userResponse = new SignupUserResponse().id(createdUserEntity.getUuid()).status("ACTIVE");
+        SignupUserResponse userResponse = new SignupUserResponse().id(createdUserEntity.getUuid()).status("USER SUCCESSFULLY REGISTERED");
         return new ResponseEntity<SignupUserResponse>(userResponse, HttpStatus.CREATED);
 
 
