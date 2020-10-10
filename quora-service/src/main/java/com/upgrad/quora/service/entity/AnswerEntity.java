@@ -32,7 +32,7 @@ public class AnswerEntity implements Serializable {
 
     @OneToOne(fetch =  FetchType.EAGER)
     @JoinColumn(name = "question_id")
-    private AnswerEntity questionId;
+    private QuestionEntity questionId;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn( name = "user_id")
@@ -71,11 +71,11 @@ public class AnswerEntity implements Serializable {
         this.date = date;
     }
 
-    public AnswerEntity getQuestionId() {
+    public QuestionEntity getQuestionId() {
         return questionId;
     }
 
-    public void setQuestionId(AnswerEntity questionId) {
+    public void setQuestionId(QuestionEntity questionId) {
         this.questionId = questionId;
     }
 
