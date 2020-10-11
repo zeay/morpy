@@ -69,7 +69,7 @@ public class UserController {
 
         UserAuthEntity userAuthEntity =  authenticationService.authenticate(decrypt[0], decrypt[1]);
 
-        SigninResponse signinResponse = new SigninResponse().id(userAuthEntity.getUserEntity().getUuid())
+        SigninResponse signinResponse = new SigninResponse().id(userAuthEntity.getUser().getUuid())
                 .message("SIGNED IN SUCCESSFULLY");
 
         HttpHeaders headers = new HttpHeaders();

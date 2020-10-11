@@ -40,7 +40,7 @@ public class AuthenticationService {
             final ZonedDateTime expiresAt = now.plusHours(8);
 
             UserAuthEntity userAuthEntity = new UserAuthEntity();
-            userAuthEntity.setUserEntity(userEntity);
+            userAuthEntity.setUser(userEntity);
             userAuthEntity.setUuid(UUID.randomUUID().toString());
             userAuthEntity.setAccessToken(tokenProvider.generateToken(userEntity.getUuid(),now,expiresAt));
             userAuthEntity.setLoginAt(now);
@@ -62,7 +62,7 @@ public class AuthenticationService {
 
         userAuthEntity.setLogoutAt(ZonedDateTime.now());
         userDao.updateUserAuth(userAuthEntity);
-        return userAuthEntity.getUserEntity().getUuid();
+        return userAuthEntity.getUser().getUuid();
 
     }
 
@@ -82,7 +82,7 @@ public class AuthenticationService {
             throw new AuthorizationFailedException("ATHR-002", errorMessage.toString());
         }
 
-        return userAuthEntity.getUserEntity();
+        return userAuthEntity.getUser();
     }
 
     /** Method validates that access-token is not expired and user is signed in
@@ -95,4 +95,7 @@ public class AuthenticationService {
     }
 
 
+    public UserEntity validateTokenForDeleteAnswerEndpoint(final String authorization) throws AuthorizationFailedException {
+        return this.validateToken(authorization, ErrorMessage.USER_SIGNED_OUT_CAN_NOT_DELETE_AN_ANSWER);
+    }
 }

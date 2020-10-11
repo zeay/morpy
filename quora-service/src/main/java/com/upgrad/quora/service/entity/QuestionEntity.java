@@ -38,7 +38,7 @@ public class QuestionEntity implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn( name = "user_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private UserEntity userId;
+    private UserEntity user;
 
     public int getId() {
         return id;
@@ -72,11 +72,11 @@ public class QuestionEntity implements Serializable {
         this.date = date;
     }
 
-    public UserEntity getUserId() {
-        return userId;
+    public UserEntity getUser() {
+        return user;
     }
 
-    public void setUserId(UserEntity userId) {
-        this.userId = userId;
+    public void setUser(UserEntity user) {
+        this.user = user;
     }
 }
