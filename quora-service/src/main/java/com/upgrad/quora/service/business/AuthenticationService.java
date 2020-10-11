@@ -20,10 +20,6 @@ public class AuthenticationService {
     @Autowired
     private UserDao userDao;
 
-    @Autowired
-    private PasswordCryptographyProvider cryptographyProvider;
-
-
     @Transactional
     public UserAuthEntity authenticate(String username, String password) throws AuthenticationFailedException {
 
@@ -32,7 +28,7 @@ public class AuthenticationService {
             throw new AuthenticationFailedException("ATH-001", "This username does not exist");
         }
 
-        String encryptedPassword =  cryptographyProvider.encrypt(password, userEntity.getSalt());
+        String encryptedPassword =  PasswordCryptographyProvider.encrypt(password, userEntity.getSalt());
         if(userEntity.getPassword().equals(encryptedPassword)){
 
             JwtTokenProvider tokenProvider = new JwtTokenProvider(encryptedPassword);
