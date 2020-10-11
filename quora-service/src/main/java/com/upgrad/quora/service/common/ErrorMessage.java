@@ -17,7 +17,14 @@ public enum ErrorMessage{
     USER_SIGNED_OUT_CAN_NOT_POST_A_QUESTION  ( "User is signed out.Sign in first to post a question"),
     USER_SIGNED_OUT_CAN_NOT_EDIT_A_QUESTION ( "User is signed out.Sign in first to edit the question"),
     USER_SIGNED_OUT_CAN_NOT_DELETE_A_QUESTION ( "User is signed out.Sign in first to delete a question"),
-    USER_SIGNED_OUT_CAN_NOT_GET_ALL_QUESTION ( "User is signed out.Sign in first to get all questions");
+    USER_SIGNED_OUT_CAN_NOT_GET_ALL_QUESTION ( "User is signed out.Sign in first to get all questions"),
+
+    /*
+    Other error messages
+     */
+
+    ANSWER_UUID_DOES_NOT_EXIST ("Entered answer uuid does not exist"),
+    OWNER_OR_ADMIN_CAN_DELETE_ANSWER("Only the answer owner or admin can delete the answer");
 
 
     private String value;

@@ -20,10 +20,6 @@ public class AuthenticationService {
     @Autowired
     private UserDao userDao;
 
-    @Autowired
-    private PasswordCryptographyProvider cryptographyProvider;
-
-
     @Transactional
     public UserAuthEntity authenticate(String username, String password) throws AuthenticationFailedException {
 
@@ -32,7 +28,7 @@ public class AuthenticationService {
             throw new AuthenticationFailedException("ATH-001", "This username does not exist");
         }
 
-        String encryptedPassword =  cryptographyProvider.encrypt(password, userEntity.getSalt());
+        String encryptedPassword =  PasswordCryptographyProvider.encrypt(password, userEntity.getSalt());
         if(userEntity.getPassword().equals(encryptedPassword)){
 
             JwtTokenProvider tokenProvider = new JwtTokenProvider(encryptedPassword);
@@ -40,7 +36,7 @@ public class AuthenticationService {
             final ZonedDateTime expiresAt = now.plusHours(8);
 
             UserAuthEntity userAuthEntity = new UserAuthEntity();
-            userAuthEntity.setUserEntity(userEntity);
+            userAuthEntity.setUser(userEntity);
             userAuthEntity.setUuid(UUID.randomUUID().toString());
             userAuthEntity.setAccessToken(tokenProvider.generateToken(userEntity.getUuid(),now,expiresAt));
             userAuthEntity.setLoginAt(now);
@@ -62,7 +58,7 @@ public class AuthenticationService {
 
         userAuthEntity.setLogoutAt(ZonedDateTime.now());
         userDao.updateUserAuth(userAuthEntity);
-        return userAuthEntity.getUserEntity().getUuid();
+        return userAuthEntity.getUser().getUuid();
 
     }
 
@@ -82,7 +78,7 @@ public class AuthenticationService {
             throw new AuthorizationFailedException("ATHR-002", errorMessage.toString());
         }
 
-        return userAuthEntity.getUserEntity();
+        return userAuthEntity.getUser();
     }
 
     /** Method validates that access-token is not expired and user is signed in
@@ -95,4 +91,7 @@ public class AuthenticationService {
     }
 
 
+    public UserEntity validateTokenForDeleteAnswerEndpoint(final String authorization) throws AuthorizationFailedException {
+        return this.validateToken(authorization, ErrorMessage.USER_SIGNED_OUT_CAN_NOT_DELETE_AN_ANSWER);
+    }
 }

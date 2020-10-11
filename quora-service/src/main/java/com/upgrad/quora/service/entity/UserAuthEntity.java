@@ -42,7 +42,7 @@ public class UserAuthEntity implements Serializable {
     @ManyToOne( fetch = FetchType.EAGER)
     @JoinColumn( name = "user_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private UserEntity userEntity;
+    private UserEntity user;
 
     public int getId() {
         return Id;
@@ -92,11 +92,11 @@ public class UserAuthEntity implements Serializable {
         this.logoutAt = logoutAt;
     }
 
-    public UserEntity getUserEntity() {
-        return userEntity;
+    public UserEntity getUser() {
+        return user;
     }
 
-    public void setUserEntity(UserEntity userEntity) {
-        this.userEntity = userEntity;
+    public void setUser(UserEntity user) {
+        this.user = user;
     }
 }
