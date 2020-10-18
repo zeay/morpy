@@ -30,7 +30,8 @@ public class QuestionController {
         UserEntity userEntity =  authenticationService.validateTokenForDeleteQuestionEndpoint(authorization);
         QuestionEntity questionEntity = questionService.getQuestionByUuid(questionUuid);
 
-        questionService.authorize(questionEntity, userEntity, questionUuid);
+        // Removed extra parameter
+        questionService.authorize(questionEntity, userEntity);
         questionService.delete(questionEntity);
 
         QuestionDeleteResponse questionDeleteResponse = new QuestionDeleteResponse().id( questionEntity.getUuid()).status("QUESTION DELETED");

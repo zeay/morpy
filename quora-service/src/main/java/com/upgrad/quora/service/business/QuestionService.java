@@ -29,11 +29,10 @@ public class QuestionService {
      * Only an owner or admin can delete the question
      * @param questionEntity  question entity, containing owner details
      * @param userEntity    user performing delete operation
-     * @param questionUuid    question's uuid, to be deleted
      * @return  true if user can delete the answer
-     * @throws AuthorizationFailedException exception is thrown if user is not allowed to delete the answer
+     * @throws AuthorizationFailedException exception is thrown if user is not allowed to delete the question
      */
-    public boolean authorize(QuestionEntity questionEntity, UserEntity userEntity, String questionUuid) throws AuthorizationFailedException {
+    public boolean authorize(QuestionEntity questionEntity, UserEntity userEntity) throws AuthorizationFailedException {
         boolean isOwner = questionEntity.getUser().getUuid().equals(userEntity.getUuid());
         boolean isAdmin = userEntity.getRole().equals("admin");
         if( isOwner || isAdmin){
