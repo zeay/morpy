@@ -22,4 +22,8 @@ public class QuestionDao {
         }
 
     }
+
+    public void delete(QuestionEntity questionEntity) {
+        entityManager.remove(questionEntity);
+    }
 }
