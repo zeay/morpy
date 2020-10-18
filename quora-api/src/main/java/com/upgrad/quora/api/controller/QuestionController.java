@@ -29,7 +29,7 @@ public class QuestionController {
    * @return UUID of the question created in DB.
    * @throws AuthorizationFailedException In case the access token is invalid.
    */
-  @RequestMapping(
+  @PostMapping(
       method = RequestMethod.POST,
       path = "/question/create",
       produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -52,7 +52,7 @@ public class QuestionController {
    * @return List of QuestionDetailsResponse
    * @throws AuthorizationFailedException In case the access token is invalid.
    */
-  @RequestMapping(
+  @GetMapping(
       method = RequestMethod.GET,
       path = "/question/all",
       produces = MediaType.APPLICATION_JSON_UTF8_VALUE)

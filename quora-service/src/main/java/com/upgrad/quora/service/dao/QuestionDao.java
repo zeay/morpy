@@ -11,6 +11,7 @@ import javax.persistence.NoResultException;
 public class QuestionDao {
 
     @Autowired
+    @PersistenceContext
     private EntityManager entityManager;
 
     public QuestionEntity getQuestionByUuid(final String uuid){
@@ -22,4 +23,15 @@ public class QuestionDao {
         }
 
     }
+
+   /**
+   * Persist the question in the DB.
+   *
+   * @param questionEntity question to be persisted.
+   * @return Persisted question.
+   */
+   public QuestionEntity createQuestion(QuestionEntity questionEntity) {
+       entityManager.persist(questionEntity);
+       return questionEntity;
+   }
 }
