@@ -25,6 +25,30 @@ public class QuestionService {
         return questionEntity;
     }
 
+
+     /**
+   * Creates question in the DB if the accessToken is valid.
+   *
+   * @param accessToken accessToken of the user for valid authentication.
+   * @throws AuthorizationFailedException ATHR-001 - if user token is not present in DB. ATHR-002 if
+   *     the user has already signed out.
+   */
+  @Transactional(propagation = Propagation.REQUIRED)
+  public QuestionEntity createQuestion(QuestionEntity questionEntity, final String accessToken)
+      throws AuthorizationFailedException {
+    UserAuthEntity userAuthEntity = userAuthDao.getUserAuthByToken(accessToken);
+    if (userAuthEntity == null) {
+      throw new AuthorizationFailedException("ATHR-001", "User has not signed in");
+    } else if (userAuthEntity.getLogoutAt() != null) {
+      throw new AuthorizationFailedException(
+          "ATHR-002", "User is signed out.Sign in first to post a question");
+    }
+    questionEntity.setDate(ZonedDateTime.now());
+    questionEntity.setUuid(UUID.randomUUID().toString());
+    questionEntity.setUserEntity(userAuthEntity.getUserEntity());
+    return questionDao.createQuestion(questionEntity);
+  }
+
     /** Authorize the delete operation on a question
      * Only an owner or admin can delete the question
      * @param questionEntity  question entity, containing owner details
@@ -46,6 +70,7 @@ public class QuestionService {
     public void delete(QuestionEntity questionEntity) {
         questionDao.delete(questionEntity);
     }
+
 
 
 }
