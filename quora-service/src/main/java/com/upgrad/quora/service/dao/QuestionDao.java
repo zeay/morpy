@@ -10,7 +10,6 @@ import javax.persistence.NoResultException;
 @Repository
 public class QuestionDao {
 
-    @Autowired
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -24,6 +23,7 @@ public class QuestionDao {
 
     }
 
+
    /**
    * Persist the question in the DB.
    *
@@ -34,4 +34,9 @@ public class QuestionDao {
        entityManager.persist(questionEntity);
        return questionEntity;
    }
+
+    public void delete(QuestionEntity questionEntity) {
+        entityManager.remove(questionEntity);
+    }
+
 }
